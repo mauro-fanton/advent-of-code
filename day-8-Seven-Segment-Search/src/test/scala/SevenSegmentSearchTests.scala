@@ -1,7 +1,5 @@
-import SevenSegmentSearchApp.{findSegmentPatter, findDigitInInput, parserInput, decode}
+import SevenSegmentSearchApp.{decode, findDigitInInput, findSegmentPatter, parserInput}
 import org.scalatest.flatspec.AnyFlatSpec
-
-import scala.annotation.tailrec
 
 class SevenSegmentSearchTests extends AnyFlatSpec {
 
@@ -21,30 +19,6 @@ class SevenSegmentSearchTests extends AnyFlatSpec {
     "egadfb cdbfeg cegd fecab cgb gbdefca cg fgcdab egfdb bfceg | gbdfcae bgc cg cgb\n" +
     "gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce\n"
 
-
-
-//  def findDigitInInput1(input: Array[(SignalPattern, OutPutValue)], digit: Array[Int]): Array[Int] = {
-//
-//
-//
-//    @tailrec
-//    def recursive(patternValueObj: (SignalPattern, OutPutValue),
-//                  numOfSegmentLength: Array[Int],
-//                  acc: Array[Int]): Array[Int] = {
-//
-//      if (numOfSegmentLength == null || numOfSegmentLength.isEmpty) return acc
-//
-//      val segmentLength = numOfSegmentLength.head
-//      val outputValue = patternValueObj._2.filter(o => o.length == segmentLength)
-//      val mapOutputValueInPattern = outputValue.map(o => patternValueObj._1.filter(pattern => pattern.length == o.length && pattern.sorted == o.sorted))
-//
-//      if (mapOutputValueInPattern.length == 0) recursive(patternValueObj, numOfSegmentLength.drop(1), acc)
-//      else recursive(patternValueObj, numOfSegmentLength.drop(1), acc ++ Array(segmentLength))
-//    }
-//
-//      val segmentLength = digit.map(o => NumSegmentsMatch(o).length)
-//      input.map(o => recursive(o, segmentLength, Array())).head
-//  }
 
   "findDigitInInput" should "find the 1, 4, 7, 8 in the signal pattern" in {
 

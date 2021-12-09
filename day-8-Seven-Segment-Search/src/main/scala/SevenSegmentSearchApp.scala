@@ -48,15 +48,12 @@ object SevenSegmentSearchApp extends App {
         n = segments.filter(o => o._2.sorted == e.sorted)
         v =  n.last._1.toString if(n != null && n.size > 0 )
       } yield v
-     // val sum = pattern.filter( o =>  segments.values.filter(v => v.sorted == o.sorted))
-
 
       loop(input.drop(1), acc ++ Array(t.mkString))
 
     }
 
     loop(input, Array())
-
   }
 
   def findSegmentPatter(pattern: Array[String]): Map[Int, String] = {
