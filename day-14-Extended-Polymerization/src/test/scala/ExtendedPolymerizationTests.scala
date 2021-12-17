@@ -1,9 +1,6 @@
-import ExtendedPolymerizationApp.{calculateTheLessCommonElement, calculateTheMOstCommonElement, filterValues, insertRule, insertRuleCopy, insertRuleCopy1, insertRuleCounter, insertionRule}
-import org.scalatest._
+import ExtendedPolymerizationApp.{calculateTheLessCommonElement, calculateTheMOstCommonElement, insertRuleCounter}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers._
-
-import scala.annotation.tailrec
 
 class ExtendedPolymerizationTests extends AnyFlatSpec {
 
