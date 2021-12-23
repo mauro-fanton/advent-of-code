@@ -1,0 +1,3 @@
+object PassagePathingApp extends App {
+
+}
