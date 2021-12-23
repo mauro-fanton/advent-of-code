@@ -35,35 +35,43 @@ class PassagePathingTests extends AnyFlatSpec{
     val lastPath = head.substring(head.lastIndexOf(",") + 1, head.length)
 
     val completedPath = filterTheEndPath(start)
+
     if(completedPath.length > 0) findAPath(start.filter(o => !o.contains("end")).distinct, paths, (acc ++ completedPath).distinct)
-    else {
-      val possiblePath = paths.filter(o => o.contains(lastPath))
-        .flatMap(o => o.split('-'))
-        .filter(o => o != lastPath)
+    else findAPath((start.drop(1) ++ getNextPath(paths, head, lastPath)).distinct, paths, acc)
+  }
 
-      val newPath = possiblePath.map(o => {
+  private def getNextPath(paths: Array[String], head: String, lastPath: String) = {
+    val possiblePath = paths.filter(o => o.contains(lastPath))
+      .flatMap(o => o.split('-'))
+      .filter(o => o != lastPath)
 
-        if(o.toLowerCase() == o && head.contains(o.toLowerCase())) head
-        else if(o.toUpperCase() == o && head.split(',').last == o.toUpperCase()) head
-        else head + "," + o
-      }).filter(o => o != head)
+    possiblePath.map(o => {
+      if (isVisited(o, head)) head
+      else if (isCurrent(o, head)) head
+      else head + "," + o
+    }).filter(o => o != head)
 
-
-     findAPath((start.drop(1) ++ newPath).distinct, paths, acc)
-    }
 
   }
 
+  def isVisited(next: String, current: String): Boolean = {
+    next.toLowerCase() == next && current.contains(next.toLowerCase())
+  }
+
+  def isCurrent(next: String, current: String): Boolean = {
+    next.toUpperCase() == next && current.split(',').last == next.toUpperCase()
+  }
   def findAllPath(startingPoints: Array[String], paths: Array[String]): Array[String] = {
-
-    val parsedInput = startingPoints.filter(o => o.contains("start")).map(o => {
-      val arr = o.split("-")
-      if(arr(0) == "start") arr(0) + "," + arr(1) else arr(1) + "," + arr(0)
-    })
-
-    parsedInput.flatMap( o => findAPath(Array(o), paths,Array()))
+    startingPoints.flatMap( o => findAPath(Array(o), paths,Array()))
   }
 
+
+  private def parseInput(startingPoints: Array[String]) = {
+    startingPoints.filter(o => o.contains("start")).map(o => {
+      val arr = o.split("-")
+      if (arr(0) == "start") arr(0) + "," + arr(1) else arr(1) + "," + arr(0)
+    })
+  }
 
   "findAPath" should "should find a path" in {
 
@@ -104,7 +112,7 @@ class PassagePathingTests extends AnyFlatSpec{
       "start,kj,dc,HN,end",
       "start,kj,dc,end")
 
-    val actual = findAllPath(arrayInput, paths)
+    val actual = findAllPath(parseInput(arrayInput), paths)
     actual should contain theSameElementsAs(expected)
   }
 }
